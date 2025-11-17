@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоды by S.Llirik</title>
+
+    <!-- Main.css -->
+    <link rel="stylesheet" href="./assets/css/main.css">
+</head>
+<body>
+
+    <!-- WEATHER-APP -->
+    <div class="weather-app" id="weather-app">
+        <section class="hero">
+            <div class="hero__bg"></div>
+
+            <form class="hero__search" id="search-form">
+                <input class="hero__search-input" type="search" placeholder="Название города" id="search-input"/>
+                <button class="hero__search-btn" id="search-button">
+                    <svg class="hero__search-icon"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                        >
+                        <path d="m21 21-4.34-4.34"/>
+                        <circle cx="11" cy="11" r="8"/>
+                    </svg>
+                    <!-- <svg class="hero__search-close"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        fill="currentColor"
+                        >
+                        <path d="M11.9997 10.5865L16.9495 5.63672L18.3637 7.05093L13.4139 12.0007L18.3637 16.9504L16.9495 18.3646L11.9997 13.4149L7.04996 18.3646L5.63574 16.9504L10.5855 12.0007L5.63574 7.05093L7.04996 5.63672L11.9997 10.5865Z"></path>
+                    </svg> -->
+                </button>
+            </form>
+            
+            <h1 class="hero__location" id="location"></h1>
+            <div class="hero__inner">
+                <div class="hero__left">
+                    <div class="hero__temp">--</div>
+                    <div class="hero__feels">Ощущается: --</div>    
+                </div>
+                <div class="hero__right">
+                    <div class="hero__image">
+                        <!-- <img class="hero__img" src="./assets/icons/weather-color-icon/partly-cloudy-day.svg" alt="Облачно"> -->
+                    </div>
+                    <div class="hero__cloudy">--</div>
+                </div>
+            </div>
+            <footer class="hero__footer">
+                <div class="hero__date">--</div>
+                <div class="hero__range">
+                    <div class="hero__range-day">Днём: --</div>
+                    <div class="hero__range-night">Ночью: --</div>
+                </div>
+            </footer>
+        </section>
+
+        <section class="today">
+            <div class="block today__tabs">
+                <button class="tab__btn active">Сегодня</button>
+                <button class="tab__btn">Завтра</button>
+                <button class="tab__btn">10 дней</button>
+            </div>
+
+            <div class="today__content">
+
+                <!-- Скорость ветра -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24"
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M12.8 19.6A2 2 0 1 0 14 16H2"/>
+                                <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/>
+                                <path d="M9.8 4.4A2 2 0 1 1 11 8H2"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Скорость ветра</div>
+                    </div>
+                    <div class="today__block-value" id="wind-speed">--</div>
+                </div>
+
+                <!-- Вероятность осадков -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg"
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                                <path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/>
+                                <path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Влажность</div>
+                    </div>
+                    <div class="today__block-value" id="humidity">--</div>
+                </div>
+
+                <!-- Давление -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M15.6 2.7a10 10 0 1 0 5.7 5.7"/>
+                                <circle cx="12" cy="12" r="2"/>
+                                <path d="M13.4 10.6 19 5"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Давление</div>
+                    </div>
+                    <div class="today__block-value" id="pressure">--</div>
+                </div>
+
+                <!-- Индекс УФ -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <circle cx="12" cy="12" r="4"/><path d="M12 2v2"/>
+                                <path d="M12 20v2"/>
+                                <path d="m4.93 4.93 1.41 1.41"/>
+                                <path d="m17.66 17.66 1.41 1.41"/>
+                                <path d="M2 12h2"/>
+                                <path d="M20 12h2"/>
+                                <path d="m6.34 17.66-1.41 1.41"/>
+                                <path d="m19.07 4.93-1.41 1.41"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Индекс УФ</div>
+                    </div>
+                    <div class="today__block-value">--</div>
+                </div>
+
+                <!-- Часовой прогноз (график)-->
+                <div class="block block--wide today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg"
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round"
+                            >
+                            <path d="M12 2a10 10 0 0 1 7.38 16.75"/>
+                            <path d="M12 6v6l4 2"/>
+                            <path d="M2.5 8.875a10 10 0 0 0-.5 3"/>
+                            <path d="M2.83 16a10 10 0 0 0 2.43 3.4"/>
+                            <path d="M4.636 5.235a10 10 0 0 1 .891-.857"/>
+                            <path d="M8.644 21.42a10 10 0 0 0 7.631-.38"/>
+                        </svg>
+                        </div>
+                        <div class="today__block-name">Часовой прогноз</div>
+                    </div>
+                    <!-- Часовая температура -->
+                    <ul class="today__hourly-list">
+                        <li class="hourly__item">
+                            <div class="hourly__top">11:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/partly-cloudy-day.svg" alt="Облачно">
+                            </div>
+                            <div class="hourly__temp">21&deg;</div>
+                        </li>
+                        <li class="hourly__item">
+                            <div class="hourly__top">12:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/overcast-day.svg" alt="Пасмурно">
+                            </div>
+                            <div class="hourly__temp">22&deg;</div>
+                        </li>
+                        <li class="hourly__item">
+                            <div class="hourly__top">13:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/drizzle.svg" alt="Морось">
+                            </div>
+                            <div class="hourly__temp">23&deg;</div>
+                        </li>
+                        <li class="hourly__item">
+                            <div class="hourly__top">14:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/rain.svg" alt="Дождь">
+                            </div>
+                            <div class="hourly__temp">24&deg;</div>
+                        </li>
+                        <li class="hourly__item">
+                            <div class="hourly__top">15:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/snow.svg" alt="Снег">
+                            </div>
+                            <div class="hourly__temp">25&deg;</div>
+                        </li>
+                        <li class="hourly__item">
+                            <div class="hourly__top">16:00</div>
+                            <div class="hourly__image">
+                                <img class="hourly__img" src="./assets/icons/weather-color-icon/fog.svg" alt="Туман">
+                            </div>
+                            <div class="hourly__temp">26&deg;</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Часовой прогноз (график) -->
+                <div class="block block--wide today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg"
+                            xmlns="http://www.w3.org/2000/svg" 
+                            viewBox="0 0 24 24" 
+                            stroke-width="2" 
+                            stroke-linecap="round" 
+                            stroke-linejoin="round"
+                            >
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M3 10h18"/>
+                            <path d="M8 14h.01"/>
+                            <path d="M12 14h.01"/>
+                            <path d="M16 14h.01"/>
+                            <path d="M8 18h.01"/>
+                            <path d="M12 18h.01"/>
+                            <path d="M16 18h.01"/>
+                        </svg>
+                        </div>
+                        <div class="today__block-name">Дневной прогноз</div>
+                    </div>
+                </div>
+
+                <!-- Вероятность осадков (график) -->
+                <div class="block block--wide today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg"
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/>
+                                <path d="M8 19v1"/><path d="M8 14v1"/><path d="M16 19v1"/>
+                                <path d="M16 14v1"/><path d="M12 21v1"/><path d="M12 16v1"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Вероятность осадков</div>
+                    </div>
+                </div>
+
+                <!-- Восход -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M12 2v8"/>
+                                <path d="m4.93 10.93 1.41 1.41"/>
+                                <path d="M2 18h2"/>
+                                <path d="M20 18h2"/>
+                                <path d="m19.07 10.93-1.41 1.41"/>
+                                <path d="M22 22H2"/>
+                                <path d="m8 6 4-4 4 4"/>
+                                <path d="M16 18a4 4 0 0 0-8 0"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Восход</div>
+                    </div>
+                    <div class="today__block-value" id="sunrise">--</div>
+                </div>
+
+                <!-- Закат -->
+                <div class="block today__block-item">
+                    <div class="today__block-row">
+                        <div class="today__block-icon">
+                            <svg class="today__block-svg" 
+                                xmlns="http://www.w3.org/2000/svg" 
+                                viewBox="0 0 24 24" 
+                                stroke-width="2" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round"
+                                >
+                                <path d="M12 10V2"/>
+                                <path d="m4.93 10.93 1.41 1.41"/>
+                                <path d="M2 18h2"/>
+                                <path d="M20 18h2"/>
+                                <path d="m19.07 10.93-1.41 1.41"/>
+                                <path d="M22 22H2"/>
+                                <path d="m16 6-4 4-4-4"/>
+                                <path d="M16 18a4 4 0 0 0-8 0"/>
+                            </svg>
+                        </div>
+                        <div class="today__block-name">Закат</div>
+                    </div>
+                    <div class="today__block-value" id="sunset">--</div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
+
+
+    <!-- Hero-bg-parallax.js -->
+     <script src="./assets/js/hero-bg-parallax.js"></script>
+    <!-- Search.js -->
+    <!-- <script src="./assets/js/search.js"></script> -->
+    <!-- Main.js -->
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>
